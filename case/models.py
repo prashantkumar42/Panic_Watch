@@ -18,6 +18,7 @@ class Coordinate(models.Model):  # to store coordinates corresponding to a case
     case = models.ForeignKey(Case, on_delete=models.CASCADE)  # case will be a Foreign key for Coordinates
     latitude = models.CharField(max_length=250)
     longitude = models.CharField(max_length=250)
+    date_created = models.DateTimeField(default=datetime.datetime.now)
     is_favorite = models.BooleanField(default=False)
 
     def __str__(self):
