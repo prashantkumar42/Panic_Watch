@@ -22,4 +22,4 @@ class Coordinate(models.Model):  # to store coordinates corresponding to a case
     is_favorite = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.latitude + ' - ' + self.longitude
+        return self.latitude + '-' + self.longitude

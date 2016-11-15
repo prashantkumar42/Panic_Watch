@@ -24,13 +24,16 @@
                         <tr>
                             <th>Latitude</th>
                             <th>Longitude</th>
-                            <th>Time of Receival</th>
+                            <th>Received On</th>
                             <th>Important Comments</th>
                         </tr>
                         </thead>
                         <tbody>
-                            {% for coord_ in coord_arr %}
-                                <tr>
+                        <div hidden name="map_coord" id="map_coord">
+                            {{ first_coord }}
+                        </div>
+                        {% for coord_ in coord_arr %}
+                            <tr>
                                 <td>{{ coord_.latitude }}</td>
                                 <td>{{ coord_.longitude }}</td>
                                 <td>{{ coord_.date_created }}</td>

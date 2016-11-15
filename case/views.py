@@ -102,14 +102,9 @@ def detail(request, case_id):
         return render(request, 'case/login.html')
     else:
         user = request.user
-        # try:
-        #     case = Case.objects.get(pk=case_id).order_by('date_created')
-        # except Case.DoesNotExist:
-        #     raise Http404("No case matches the given query.")
         case = get_object_or_404(Case, pk=case_id)
         coord_arr = case.coordinate_set.all().order_by('-date_created')
-        return render(request, 'case/detail.html', {'case': case, 'coord_arr': coord_arr, 'user': user}) # we need to pass case for watch_id and victim name
-        # return render(request, 'case/detail.html', {'coord_arr': coord_arr, 'user': user})
+        return render(request, 'case/detail.html', {'case': case, 'coord_arr': coord_arr, 'user': user, 'first_coord': coord_arr[0]}) # we need to pass case for watch_id and victim name
 
 
 def index(request):
