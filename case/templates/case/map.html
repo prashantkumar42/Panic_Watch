@@ -1,0 +1,75 @@
+<!--Displays map on the screen-->
+<div id="floating-panel">
+    <b>Mode of Travel:</b>
+    <select id="mode">
+        <option value="DRIVING">Driving</option>
+        <option value="WALKING">Walking</option>
+        <option value="BICYCLING">Bicycling</option>
+        <option value="TRANSIT">Transit</option>
+    </select>
+</div>
+
+<div id="map" style="width:100%;height:80ex;background:yellow"></div> {# Show map in this div #}
+
+<script>
+    var z = 5;
+    var map; var directionsDisplay; var directionsService
+    function initMap() {
+        directionsDisplay = new google.maps.DirectionsRenderer;
+        directionsService = new google.maps.DirectionsService;
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 5,
+            center: {lat: 0, lng: 0},
+            preserveViewport: true
+        });
+        directionsDisplay.setMap(map);
+
+        var cur_victim_coord = document.getElementById('map_coord').innerHTML;
+        cur_victim_coord = cur_victim_coord.split('-');
+
+        var a = 26.8985; {# police_lat #}
+        var b = 80.6898; {# police_lng #}
+        var c = cur_victim_coord[0];
+        var d = cur_victim_coord[1];
+        a = parseFloat(a);
+        b = parseFloat(b);
+        c = parseFloat(c);
+        d = parseFloat(d);
+
+        var i = 1;
+        var lat = 26.8985;
+        var lng = 80.6898;
+        calculateAndDisplayRoute(directionsService, directionsDisplay,a,b,c,d);
+{#        function myLoop () {#}
+{#            setTimeout(function () {#}
+{#                calculateAndDisplayRoute(directionsService, directionsDisplay,a,b,c,d);#}
+{#                document.getElementById('mode').addEventListener('change', function() {#}
+{#                    calculateAndDisplayRoute(directionsService, directionsDisplay,a,b,c,d);#}
+{#                });#}
+{#                i++;#}
+{#                myLoop();#}
+{#            }, 5000);#}
+{#        }#}
+{##}
+{#        myLoop();#}
+    }
+
+
+    function calculateAndDisplayRoute(directionsService, directionsDisplay,a,b,c,d) {
+        // console.log(b);
+        directionsService.route({
+            origin: {lat: a, lng: b},
+            destination: {lat: c, lng: d},
+            travelMode: 'DRIVING'
+        }, function(response, status) {
+            if (status === 'OK') {
+                directionsDisplay.setDirections(response);
+            } else {
+                window.alert('Directions request failed due to ' + status);
+            }
+        });
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCt9m47SizodeklGygsCD_dGrhE8zC4Eh0&callback=initMap">
+</script>

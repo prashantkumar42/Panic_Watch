@@ -29,9 +29,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <div hidden name="map_coord" id="map_coord">
-                            {{ first_coord }}
-                        </div>
+                        <div hidden name="map_coord" id="map_coord">{{ first_coord }}</div>
                         {% for coord_ in coord_arr %}
                             <tr>
                                 <td>{{ coord_.latitude }}</td>
@@ -70,14 +68,9 @@
                     <h3>
                         <b>Victim Name: </b>{{ case.victim_name }}
                     </h3>
-                    <a href="{% url 'case:detail' case.id %}">
-                        {#          TODO - insert map here, insted of image          #}
-                        {#                        {% if case.case_logo %}#}
-                        {#                            <img src="{{ case.case_logo.url }}" class="img-responsive">#}
-                        {#                        {% else %}#}
-                        <h3>Loading Map...</h3>
-                        {#                        {% endif %}#}
-                    </a>
+                    <h3>Loading Map...</h3>
+                    {#         Add map template here, to show the map           #}
+                    {% include 'case/map.html' %}
                 </div>
             </div>
         </div>
