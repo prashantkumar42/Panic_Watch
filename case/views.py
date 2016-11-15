@@ -107,8 +107,8 @@ def detail(request, case_id):
         # except Case.DoesNotExist:
         #     raise Http404("No case matches the given query.")
         case = get_object_or_404(Case, pk=case_id)
-        # coord_arr = case.coordinate_set.all
-        return render(request, 'case/detail.html', {'case': case, 'user': user})
+        coord_arr = case.coordinate_set.all().order_by('-date_created')
+        return render(request, 'case/detail.html', {'case': case, 'coord_arr': coord_arr, 'user': user}) # we need to pass case for watch_id and victim name
         # return render(request, 'case/detail.html', {'coord_arr': coord_arr, 'user': user})
 
 
