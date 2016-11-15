@@ -7,7 +7,7 @@
 
     <div class="row">
         <!-- Left side => Case Info -->
-        <div class="col-md-6">
+        <div class="col-md-5">
             <ul class="nav nav-pills" style="margin-bottom: 10px;">
                 <li role="presentation" class="active"><a href="{% url 'case:detail' case.id %}">View All Coordinates</a></li>
                 <li role="presentation"><a href="{% url 'case:create_coordinate' case.id %}">Add New Coordinate</a></li>
@@ -59,7 +59,7 @@
         </div>
 
         <!-- Right side => Display Map -->
-        <div class="col-md-6">
+        <div class="col-md-7">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <h3>
@@ -68,7 +68,6 @@
                     <h3>
                         <b>Victim Name: </b>{{ case.victim_name }}
                     </h3>
-                    <h3>Loading Map...</h3>
                     {#         Add map template here, to show the map           #}
                     {% include 'case/map.html' %}
                 </div>
