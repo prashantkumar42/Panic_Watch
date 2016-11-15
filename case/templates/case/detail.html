@@ -1,0 +1,86 @@
+{% extends 'case/base.html' %}
+{% block title %}{{ case }}{% endblock %}  {# to set the title #}
+{% block cases_active %}active{% endblock %}  {# to set a nav menu to currently active #}
+
+{% block body %}
+<div class="container-fluid coordinates-container">
+
+    <div class="row">
+
+        <!-- Left side => Case Info -->
+        <div class="col-sm-4 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a href="{% url 'case:detail' case.id %}">
+                    {#          TODO - insert map here, insted of image          #}
+{#                        {% if case.case_logo %}#}
+{#                            <img src="{{ case.case_logo.url }}" class="img-responsive">#}
+{#                        {% else %}#}
+                            <h3>No image to display</h3>
+{#                        {% endif %}#}
+                    </a>
+                    <h1>{{ case.watch_id }}</h1>
+                    <h2>{{ case.victim_name }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right side => all coordinates Info -->
+        <div class="col-sm-8 col-md-9">
+
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li role="presentation" class="active"><a href="{% url 'case:detail' case.id %}">View All Coordinates</a></li>
+                <li role="presentation"><a href="{% url 'case:create_coordinate' case.id %}">Add New Coordinate</a></li>
+            </ul>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <h3>All Coordinates</h3>
+
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
+                            <th>Important</th>
+                            <th>Comments</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for coordinate in case.coordinate_set.all %}
+                            <tr>
+                                <td>{{ coordinate.latitude }}</td>
+                                <td>{{ coordinate.longitude }}</td>
+                                <td>
+{#                  TODO                  <a href="{% url 'case:favorite' coordinate.id %}" class="btn-favorite"><span class="glyphicon glyphicon-star {% if coordinate.is_favorite %}active{% endif %}"></span></a>#}
+                                </td>
+                                <td>
+{#                  TODO - Add code for comments here                  #}
+{#                                    <form action="{% url 'case:delete_song' case.id song.id %}" method="post" style="display: inline;">#}
+{#                                        {% csrf_token %}#}
+{#                                        <input type="hidden" name="song_id" value="{{ song.id }}" />#}
+{#                                        <button type="submit" class="btn btn-danger btn-xs">#}
+{#                                            <span class="glyphicon glyphicon-remove"></span>&nbsp; Delete#}
+{#                                        </button>#}
+{#                                    </form>#}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -5,8 +5,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^cases/', include('cases.urls')),
-    url(r'^', include('cases.urls')),
+    url(r'^case/', include('case.urls')),
+    url(r'^', include('case.urls')),
 ]
 
 if settings.DEBUG:

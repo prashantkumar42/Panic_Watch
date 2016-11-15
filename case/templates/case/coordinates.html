@@ -1,0 +1,55 @@
+{% extends 'case/base.html' %}
+{% block title %}All Coordinates{% endblock %}
+{% block coordinates_active %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid coordinates-container">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li role="presentation" {% if filter_by == 'all' %}class="active"{% endif %}><a href="{% url 'case:coordinates' 'all' %}">View All</a></li>
+{#  TODO              <li role="presentation" {% if filter_by == 'favorites' %}class="active"{% endif %}><a href="{% url 'case:coordinates' 'favorites' %}">Favorites</a></li>#}
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-12">
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Latitude</th>
+                                <th>Longitude</th>
+                                <th>Case</th>
+                                <th>Starred</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for coordinate in coordinate_list %}
+                                <tr>
+                                    <td>{{ coordinate.latitude }}</td>
+                                    <td>{{ coordinate.longitude }}</td>
+                                    <td>
+                                        <a href="{% url 'case:detail' coordinate.case.id %}">{{ coordinate.case.watch_id }}</a>
+                                    </td>
+                                    <td>
+{#              TODO                          <a href="{% url 'case:favorite' coordinate.id %}" class="btn-favorite"><span class="glyphicon glyphicon-star {% if coordinate.is_favorite %}active{% endif %}"></span></a>#}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
