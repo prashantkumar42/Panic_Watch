@@ -26,17 +26,18 @@
                                 <th>Latitude</th>
                                 <th>Longitude</th>
                                 <th>Case</th>
-                                <th>Starred</th>
+                                <th>Received On:</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for coordinate in coordinate_list %}
                                 <tr>
-                                    <td>{{ coordinate.latitude }}</td>
-                                    <td>{{ coordinate.longitude }}</td>
                                     <td>
                                         <a href="{% url 'case:detail' coordinate.case.id %}">{{ coordinate.case.watch_id }}</a>
                                     </td>
+                                    <td>{{ coordinate.latitude }}</td>
+                                    <td>{{ coordinate.longitude }}</td>
+                                    <td>{{ coordinate.date_created }}</td>
                                     <td>
 {#              TODO                          <a href="{% url 'case:favorite' coordinate.id %}" class="btn-favorite"><span class="glyphicon glyphicon-star {% if coordinate.is_favorite %}active{% endif %}"></span></a>#}
                                     </td>

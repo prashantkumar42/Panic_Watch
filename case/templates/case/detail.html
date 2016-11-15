@@ -12,7 +12,6 @@
                 <li role="presentation" class="active"><a href="{% url 'case:detail' case.id %}">View All Coordinates</a></li>
                 <li role="presentation"><a href="{% url 'case:create_coordinate' case.id %}">Add New Coordinate</a></li>
             </ul>
-
             <div class="panel panel-default">
                 <div class="panel-body">
                     <h3>All Coordinates</h3>
@@ -30,6 +29,7 @@
                         </tr>
                         </thead>
                         <tbody>
+{#                        {% for coordinate in coord_arr %}#}
                         {% for coordinate in case.coordinate_set.all %}
                             <tr>
                                 <td>{{ coordinate.latitude }}</td>
@@ -62,8 +62,12 @@
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    Watch ID: {{ case.watch_id }} <br>
-                    Victim Name: {{ case.victim_name }}
+                    <h3>
+                        Watch ID: {{ case.watch_id }} <br>
+                    </h3>
+                    <h3>
+                        <b>Victim Name: </b>{{ case.victim_name }}
+                    </h3>
                     <a href="{% url 'case:detail' case.id %}">
                         {#          TODO - insert map here, insted of image          #}
                         {#                        {% if case.case_logo %}#}
