@@ -4,6 +4,9 @@ from django.http import Http404
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
+from django.http import HttpResponse
+import json
+
 from .forms import CaseForm, CoordinateForm, UserForm
 from .models import Case, Coordinate
 
@@ -103,8 +106,27 @@ def detail(request, case_id):
     else:
         user = request.user
         case = get_object_or_404(Case, pk=case_id)
+        # sorted array of the coordinates in decreasing order of time
         coord_arr = case.coordinate_set.all().order_by('-date_created')
         return render(request, 'case/detail.html', {'case': case, 'coord_arr': coord_arr, 'user': user, 'first_coord': coord_arr[0]}) # we need to pass case for watch_id and victim name
+
+
+def detail_json(request, case_id):
+    if not request.user.is_authenticated():
+        return render(request, 'case/login.html')
+    else:
+        user = request.user
+        case = get_object_or_404(Case, pk=case_id)
+        coord_arr = case.coordinate_set.all().order_by('-date_created')
+        # coord_arr_json = json.dumps(coord_arr)
+        ret_json=[]
+        for coord_ in coord_arr:
+            ret_json.append({'lat': coord_.latitude, 'lng': coord_.longitude})
+            ret_json.append({'lat': coord_.latitude, 'lng': coord_.longitude, 'date': coord_.date_created.isoformat()})
+        print(ret_json)
+        ret_json = json.dumps(ret_json)
+        return HttpResponse(ret_json)
+        # return HttpResponse("abc")
 
 
 def index(request):

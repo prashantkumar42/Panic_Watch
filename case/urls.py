@@ -5,10 +5,14 @@ app_name = 'case'
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+
     url(r'^register/$', views.register, name='register'),
     url(r'^login_user/$', views.login_user, name='login_user'),
     url(r'^logout_user/$', views.logout_user, name='logout_user'),
+
     url(r'^(?P<case_id>[0-9]+)/$', views.detail, name='detail'),
+    url(r'^(?P<case_id>[0-9]+)/json$', views.detail_json, name='detail_json'),
+
     url(r'^coordinates/(?P<filter_by>[a-zA_Z]+)/$', views.coordinates, name='coordinates'), # if filter_by = all => show all coordinates
     url(r'^create_case/$', views.create_case, name='create_case'),
     url(r'^(?P<case_id>[0-9]+)/create_coordinate/$', views.create_coordinate, name='create_coordinate'),
