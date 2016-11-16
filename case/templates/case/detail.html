@@ -14,18 +14,23 @@
             </ul>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <h3>All Coordinates</h3>
+                    <table width="100%" style="border-bottom: hidden;">
+                        <tr>
+                            <td align="Center"><b>All Coordinates</b></td>
+                            <td align="Center"><button type="button" class="btn btn-info" onclick="window.Refresh()">Refresh</button></td>
+                        </tr>
+                    </table>
                     {% if error_message %}
                         <p><strong>{{ error_message }}</strong></p>
                     {% endif %}
 
-                    <table class="table">
+                    <table class="table" id="coordinate_table">
                         <thead>
                         <tr>
                             <th>Latitude</th>
                             <th>Longitude</th>
                             <th>Received On</th>
-                            <th>Important Comments</th>
+                            <th>Comments</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -77,5 +82,34 @@
     </div>
 
 </div>
+<script>
+    document.getElementById('mode').addEventListener('change', function() {
+        calculateAndDisplayRoute(directionsService, directionsDisplay,a,b,c,d);
+    });
+    function refreshMap() {
+        calculateAndDisplayRoute(directionsService, directionsDisplay,a,b,c,d);
+    }
 
+    var res;
+    function Refresh() {
+        $.get('{% url 'case:detail_json' case.id %}', function(response, status){
+            // alert("Data: " + response + "\nStatus: " + status);
+            // convert string to JSON
+            response = $.parseJSON(response);
+            res = response;
+            var htm = '';
+            $.each(res, function(i, item) {
+                htm += '<tr><td>' + item.lat + '</td><td>' + item.lng + '</td><td>' + item.date + '</td></tr>';
+            });
+            $('#coordinate_table').find("tr:gt(0)").remove(); {# clear the table first #}
+            $('#coordinate_table').append(htm); {# populate the table with new values #}
+
+            c = parseFloat(res[0].lat);
+            d = parseFloat(res[0].lng);
+            refreshMap();
+        });
+    }
+
+    setInterval(Refresh, 5000); {# Refetech coordinates every five seconds #}
+</script>
 {% endblock %}

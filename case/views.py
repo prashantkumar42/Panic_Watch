@@ -118,15 +118,12 @@ def detail_json(request, case_id):
         user = request.user
         case = get_object_or_404(Case, pk=case_id)
         coord_arr = case.coordinate_set.all().order_by('-date_created')
-        # coord_arr_json = json.dumps(coord_arr)
         ret_json=[]
         for coord_ in coord_arr:
-            ret_json.append({'lat': coord_.latitude, 'lng': coord_.longitude})
-            ret_json.append({'lat': coord_.latitude, 'lng': coord_.longitude, 'date': coord_.date_created.isoformat()})
-        print(ret_json)
+            ret_json.append({'lat': coord_.latitude, 'lng': coord_.longitude, 'date': coord_.date_created.ctime()})
+        # print(ret_json)
         ret_json = json.dumps(ret_json)
         return HttpResponse(ret_json)
-        # return HttpResponse("abc")
 
 
 def index(request):
