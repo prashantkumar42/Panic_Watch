@@ -157,11 +157,16 @@ def detail_json_1(request, case_id):  # send last coordinate only (in json forma
         ret_json = {}
         if len(coord_arr)>0:
             coord_ = coord_arr[0]
+
+            o_lat = 26.8985
+            o_lng = 80.6898
             ret_json = {'lat': coord_.latitude, 'lng': coord_.longitude, 'date': coord_.date_created.ctime()}
+            ret = str(o_lat) + " " +  str(o_lng) + " " + coord_.latitude + " " + coord_.longitude
 
         # print(ret_json)
         ret_json = json.dumps(ret_json)
-        return HttpResponse(ret_json)
+        # return HttpResponse(ret_json)
+        return HttpResponse(ret)
 
 
 def index(request):
