@@ -14,6 +14,10 @@
 </div> {# Show map in this div #}
 
 <script>
+    document.getElementById('mode').addEventListener('change', function() {
+        calculateAndDisplayRoute(directionsService, directionsDisplay,a,b,c,d);
+    });
+
     var a = 26.8985; {# police_lat #}
     var b = 80.6898; {# police_lng #}
     var c = 26.8985, d = 80.6898;

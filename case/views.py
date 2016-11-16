@@ -106,6 +106,11 @@ def detail(request, case_id):
     else:
         user = request.user
         case = get_object_or_404(Case, pk=case_id)
+        if (case.user == user):
+            print("#### valid user ######")
+        else:
+            print("**** Unauthorized ****")
+            return HttpResponse('<h1>Unauthorized...<h1>')
         # sorted array of the coordinates in decreasing order of time
         coord_arr = case.coordinate_set.all().order_by('-date_created')
         return render(request, 'case/detail.html', {'case': case, 'coord_arr': coord_arr, 'user': user, 'first_coord': coord_arr[0]}) # we need to pass case for watch_id and victim name
@@ -117,6 +122,13 @@ def detail_json(request, case_id):
     else:
         user = request.user
         case = get_object_or_404(Case, pk=case_id)
+
+        if (case.user == user):
+            print("#### valid user ######")
+        else:
+            print("**** Unauthorized ****")
+            return HttpResponse('<h1>Unauthorized...<h1>')
+
         coord_arr = case.coordinate_set.all().order_by('-date_created')
         ret_json = []
         for coord_ in coord_arr:
@@ -132,6 +144,13 @@ def detail_json_1(request, case_id):  # send last coordinate only (in json forma
     else:
         user = request.user
         case = get_object_or_404(Case, pk=case_id)
+
+        if (case.user == user):
+            print("#### valid user ######")
+        else:
+            print("**** Unauthorized ****")
+            return HttpResponse('<h1>Unauthorized...<h1>')
+
         coord_arr = case.coordinate_set.all().order_by('-date_created')
         coord_ = coord_arr[0]
         ret_json = {'lat': coord_.latitude, 'lng': coord_.longitude, 'date': coord_.date_created.ctime()}
