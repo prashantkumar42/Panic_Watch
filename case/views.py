@@ -118,9 +118,23 @@ def detail_json(request, case_id):
         user = request.user
         case = get_object_or_404(Case, pk=case_id)
         coord_arr = case.coordinate_set.all().order_by('-date_created')
-        ret_json=[]
+        ret_json = []
         for coord_ in coord_arr:
             ret_json.append({'lat': coord_.latitude, 'lng': coord_.longitude, 'date': coord_.date_created.ctime()})
+        # print(ret_json)
+        ret_json = json.dumps(ret_json)
+        return HttpResponse(ret_json)
+
+
+def detail_json_1(request, case_id):  # send last coordinate only (in json format) => for app
+    if not request.user.is_authenticated():
+        return render(request, 'case/login.html')
+    else:
+        user = request.user
+        case = get_object_or_404(Case, pk=case_id)
+        coord_arr = case.coordinate_set.all().order_by('-date_created')
+        coord_ = coord_arr[0]
+        ret_json = {'lat': coord_.latitude, 'lng': coord_.longitude, 'date': coord_.date_created.ctime()}
         # print(ret_json)
         ret_json = json.dumps(ret_json)
         return HttpResponse(ret_json)

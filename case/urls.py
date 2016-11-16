@@ -12,6 +12,7 @@ urlpatterns = [
 
     url(r'^(?P<case_id>[0-9]+)/$', views.detail, name='detail'),
     url(r'^(?P<case_id>[0-9]+)/json$', views.detail_json, name='detail_json'),
+    url(r'^(?P<case_id>[0-9]+)/json/1$', views.detail_json_1, name='detail_json_1'),
 
     url(r'^coordinates/(?P<filter_by>[a-zA_Z]+)/$', views.coordinates, name='coordinates'), # if filter_by = all => show all coordinates
     url(r'^create_case/$', views.create_case, name='create_case'),
